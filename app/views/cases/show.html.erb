@@ -1,0 +1,106 @@
+<h3>Case</h3>
+<p>Title:  <%= @case.title if @case.title %></p>
+<p>Created Time:  <%= @case.created_at if @case.created_at %></p>
+
+<h4>Factual Predicates:</h4>
+<%= form_for(@case) do |f| %>
+
+<% @pres.each do |pre| %>
+    <p>
+      <%= check_box_tag(pre.id,value = 1,checked = pre.cases.exists?(@case)) %>
+      <%= label_tag(pre.content, pre.content) %>
+    </p>
+<% end %>
+
+    <% if current_user.try(:admin?) %>
+        <p>Case type:
+          <%= f.select(:kind, Case.kinds.keys.map {|kind| [kind.titleize,kind]}) %>
+        </p>
+        <%= f.submit 'Update', :class => 'button-xs' %>
+        <%elsif current_user == @case.user%>
+        <%= f.submit 'Update', :class => 'button-xs' %>
+        <% end %>
+
+<%end%>
+<h4>Applied Dimensions:</h4>
+<% @hasDims.each do |dim| %>
+    <p>
+      <%=  dim.name %>
+    </p>
+<% end %>
+
+<% if !@nearMissDims.empty? %>
+<h4>Near Miss Dimensions:</h4>
+<% @nearMissDims.each do |dim| %>
+    <p>
+      <%=  dim.name %>
+    </p>
+<% end %>
+
+<%= link_to("Claim Lattice", claim_case_path(@rootNode.nodeNum),:data => { :value => @rootNode.nodeNum},:class => 'button-xs') %>
+<%else%>
+    <h4>Near Miss Dimensions:</h4>
+      <p>None</p>
+    <%end%>
+
+
+
+
+<h4>Selected Cases:</h4>
+<% @myCases.each do |myCase| %>
+    <tr>
+      <p>
+        Case name:<%= link_to myCase[0].title, myCase[0] %>
+      </p>
+      <p>
+        Applied dimensions:
+        <% myCase[0].hasDims.each do |dim| %>
+            <%=  link_to dim.name, dim %>
+        <% end %>
+      </p>
+    </tr>
+<% end %>
+
+<% if !@nearMissDims.empty? %>
+<h3>Hypotheticals</h3>
+<h4>Factual Predicates:</h4>
+<% @hasPres.each do |pre| %>
+    <p>
+      <%=pre.content%>
+    </p>
+<% end %>
+<% @addFocal.each do |fo| %>
+    <p>
+      <%=fo.content%>
+    </p>
+<% end %>
+
+
+<h4>Applied Dimensions:</h4>
+<% @hasDims_hypo.each do |dim| %>
+    <p>
+      <%=  dim.name %>
+    </p>
+<% end %>
+
+
+<h4>Selected Cases:</h4>
+<% @myCases_hypo.each do |myCase| %>
+    <tr>
+      <p>
+        Case name:<%= link_to myCase[0].title, myCase[0] %>
+      </p>
+      <p>
+        Applied dimensions:
+        <% myCase[0].hasDims.each do |dim| %>
+            <%=  link_to dim.name, dim %>
+        <% end %>
+      </p>
+    </tr>
+<% end %>
+
+<%= link_to("Claim Lattice hypo", claimHypo_case_path(@rootNode.nodeNum),:data => { :value => @rootNode_hypo.nodeNum},:class => 'button-xs') %>
+<%else%>
+    <h3>Hypotheticals:</h3>
+     <p> None</p>
+<%end %>

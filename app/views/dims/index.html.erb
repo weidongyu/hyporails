@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <h3>Dimensions</h3>
+    <p>
+    <%= link_to("Create Dimensions", { :controller=> 'dims', :action => 'new' }, :class => 'button-xs')  %>
+    </p>
+    <div class="column">
+      <table class="table">
+        <tbody>
+          <% @dims.each do |dim| %>
+            <tr>
+              <%= render dim %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<h3>New Dimensions</h3>
+<%= form_for (@dim), url: {action: "create"} do |f| %>
+    <p>Name:</p>
+    <%= f.text_field :name %>
+    <p>Claims:</p>
+    <%= f.text_field :claims %>
+    <p>Focal Slot:</p>
+    <%= f.text_field :focalSlot %>
+    <p>Pro plaintiff direction:</p>
+    <%= f.text_field :proPlDr %>
+    <p>Comparison type:</p>
+    <%= f.text_field :compType %>
+
+
+    <p>Prerequisites:</p>
+    <% @pres.each do |pre| %>
+        <p>
+          <%= check_box_tag(pre.id,value = 1,checked = pre.dims.exists?(@dim)) %>
+          <%= label_tag(pre.content, pre.content) %>
+        </p>
+    <% end %>
+
+
+    <p>Focal slot prerequisite:</p>
+    <% @AllFocal.each do |focal| %>
+        <p>
+          <%= check_box_tag("focal"+focal.id.to_s,value = 1,checked = focal.dims.exists?(@dim)) %>
+          <%= label_tag(focal.content, focal.content) %>
+        </p>
+    <% end %>
+    <%= f.submit 'Create', :class => 'button-xs' %>
+<% end %>
+

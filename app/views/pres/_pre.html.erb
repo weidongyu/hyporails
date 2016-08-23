@@ -1,0 +1,13 @@
+<td>
+  <%=pre.id %>
+</td>
+
+<td>
+  <%= form_for(pre) do |f| %>
+      <%= f.text_area :content %>
+    <%= f.submit 'Change', :class => 'button-xs' %>
+  <% end %>
+</td>
+<td>
+  <%= link_to("Delete", pre_path(pre), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs')  %>
+</td>

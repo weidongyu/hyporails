@@ -1,0 +1,26 @@
+<h3>Dimensions</h3>
+<p>Name:  <%= @dim.name if @dim.name %></p>
+<p>Created Time:  <%= @dim.created_at if @dim.created_at %></p>
+<%= form_for(@dim) do |f| %>
+   <p> Name:<%= f.text_field :name %></p>
+    <p> Claims:<%= f.text_field :claims %></p>
+    <p> Focal slot:<%= f.text_field :focalSlot %></p>
+    <p> Pro plaintiff direction:<%= f.text_field :proPlDr %></p>
+    <p> Comparison type:<%= f.text_field :compType %></p>
+
+    <% @pres.each do |pre| %>
+    <p>
+      <%= check_box_tag(pre.id,value = 1,checked = pre.dims.exists?(@dim)) %>
+      <%= label_tag(pre.content, pre.content) %>
+    </p>
+  <% end %>
+
+    <h4>Focal Slot Prerequisites</h4>
+    <% @focals.each do |focal| %>
+        <p>
+          <%= check_box_tag("focal"+focal.id.to_s,value = 1,checked = focal.dims.exists?(@dim)) %>
+          <%= label_tag(focal.content, focal.content) %>
+        </p>
+    <% end %>
+    <%= f.submit 'Update', :class => 'button-xs' %>
+<% end %>

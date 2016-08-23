@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <h3>Claim Lattice</h3>
+    <box style="border-height:100px; border-width:100px; border-color:#D3D3D3; border-style:solid; position:absolute; left:16px; top:130px; right:15px;background-color:#F5F5F5; ">
+
+      <a class="button-xs" >Node <%= @currentNode.nodeNum%></a>
+    <p>Applied Dimensions:</p>
+    <% @currentNode.nDims.each do |dim| %>
+        <p>
+          <%= link_to dim.name, dim %>
+        </p>
+    <% end %>
+    <p>Applied Cases:</p>
+    <% @currentNode.nCases.each do |cAse| %>
+        <p>
+          <%= link_to cAse.title, cAse %>
+          (<%= cAse.conclusion %>)
+        </p>
+
+    <% end %>
+
+
+
+      <% if @currentNode.pNode %>
+          <p>
+
+            <%= link_to("Parent Node "+@currentNode.pNode.nodeNum.to_s, claimHypo_case_path(@currentNode.pNode.nodeNum),:class => 'button-xs') %>
+          </p>
+      <% end %>
+
+
+      <% if !@currentNode.cNodes.empty? %>
+      <p>Children Node:</p>
+      <% @currentNode.cNodes.each do |node| %>
+          <p>
+            <%= link_to("Child Node "+node.nodeNum.to_s, claimHypo_case_path(node.nodeNum),:value => node.nodeNum,:class => 'button-xs') %>
+          </p>
+      <% end %>
+      <% end %>
+    </box>
+  </div>
+</div>

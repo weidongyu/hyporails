@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <h3>Cases</h3>
+    <p>
+    <%= link_to("Create Case", { :controller=> 'cases', :action => 'new' }, :class => 'button-xs')  %>
+    </p>
+    <div class="column">
+      <table class="table">
+        <tbody>
+          <% @myCases.each do |myCase| %>
+            <tr>
+              <td>
+                <%= link_to myCase.title, myCase %>
+              </td>
+              <td>
+                <%= form_for(myCase) do |f| %>
+                    <%= f.select(:kind, Case.kinds.keys.map {|kind| [kind.titleize,kind]}) %>
+                    <!--<% if current_user.try(:admin?) %>-->
+                    <!--<%= f.submit 'Change Type', :class => 'button-xs' %>-->
+                        <!--<% end %>-->
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to("Delete Case", case_path(myCase), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs')  %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

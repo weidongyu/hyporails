@@ -1,0 +1,15 @@
+<h3>Case</h3>
+<%= form_for (@case), url: {action: "create"} do |f| %>
+    <%= f.text_field :title %>
+    <% @pres.each do |pre| %>
+        <p>
+          <%= check_box_tag(pre.id,value = 1,checked = pre.cases.exists?(@case)) %>
+          <%= label_tag(pre.content, pre.content) %>
+        </p>
+    <% end %>
+    <%= f.select(:conclusion, Case.conclusions.keys.map {|conclusion| [conclusion.titleize,conclusion]}) %>
+
+    <p></p>
+    <%= f.submit 'Create', :class => 'button-xs' %>
+<% end %>
+
