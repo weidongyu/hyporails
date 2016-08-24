@@ -234,6 +234,8 @@ class CasesController < ApplicationController
     p 'caseList  :',@caseList_hypo
 
 
+    @nearMissCase = @myCases_hypo - @myCases_hypo
+
 
     @rootNode_hypo.set_totalNum_zero
     @rootNode_hypo.totalNum_add
