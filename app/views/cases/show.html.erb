@@ -29,13 +29,10 @@
     </p>
 <% end %>
 
-<% if !@nearMissDims.empty? %>
+
 
 <%= link_to("Claim Lattice", claim_case_path(@rootNode.nodeNum),:data => { :value => @rootNode.nodeNum},:class => 'button-xs') %>
-<%else%>
-    <h4>Near Miss Dimensions:</h4>
-      <p>None</p>
-    <%end%>
+
 
 
 
